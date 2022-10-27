@@ -1,10 +1,15 @@
 import css from "./index.module.scss";
 import Map, { GeolocateControl, NavigationControl, ScaleControl } from "react-map-gl";
+import { useState } from "react";
+import DrawOnMap from "../DrawOnMap";
 
 export default function MyMap() {
 
+  const [draw, setDraw] = useState();
+
   return (
     <div className={css.container}>
+
       <Map
         initialViewState={{
           longitude: 2.5,
@@ -16,7 +21,13 @@ export default function MyMap() {
         <NavigationControl/>
         <ScaleControl/>
         <GeolocateControl/>
+        {draw && <DrawOnMap />}
       </Map>
+
+      <button onClick={() => setDraw(!draw)}>
+        Dessiner
+      </button>
+
     </div>
   );
 }
