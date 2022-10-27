@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import MyMap from '../components/MyMap'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -15,6 +15,7 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="">Plantarium!</a>
         </h1>
+        <MyMap />
       </main>
     </div>
   )
