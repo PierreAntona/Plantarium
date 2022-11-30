@@ -1,0 +1,32 @@
+@import "./config.scss";
+
+@font-face {
+  font-family: "ApfelGrotezkRegular";
+  src: url("/fonts/ApfelGrotezk-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "ApfelGrotezkBold";
+  src: url("/fonts/ApfelGrotezkFett700.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "GetaiGrotesk";
+  src: url("/fonts/DTGetaiGroteskDisplay-Black.otf") format("opentype");
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'ApfelGrotezkRegular', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}

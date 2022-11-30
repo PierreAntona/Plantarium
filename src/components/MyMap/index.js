@@ -6,6 +6,8 @@ import DrawOnMap from "../DrawOnMap";
 export default function MyMap() {
 
   const [draw, setDraw] = useState();
+  const [erase, setErase] = useState();
+  const [undo, setUndo] = useState();
 
   return (
     <div className={css.container}>
@@ -21,11 +23,17 @@ export default function MyMap() {
         <NavigationControl/>
         <ScaleControl/>
         <GeolocateControl/>
-        {draw && <DrawOnMap />}
+        {draw && <DrawOnMap erase={erase} setErase={setErase} undo={undo} setUndo={setUndo}/>}
       </Map>
 
       <button onClick={() => setDraw(!draw)}>
         Dessiner
+      </button>
+      <button onClick={() => setUndo(true)}>
+        Retour
+      </button>
+      <button onClick={() => setErase(true)}>
+        Effacer
       </button>
 
     </div>

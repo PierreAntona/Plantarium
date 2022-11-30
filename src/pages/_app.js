@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 function MyApp({ Component, pageProps }) {

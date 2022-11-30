@@ -1,0 +1,29 @@
+@import "/src/styles/config.scss";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $brown;
+
+  img {
+    width: 200px;
+  }
+
+  .menu {
+    display: flex;
+
+    span {
+      font-size: 20px;
+      cursor: pointer;
+
+      &:last-of-type {
+        margin-left: 80px;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

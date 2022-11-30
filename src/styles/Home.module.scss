@@ -1,0 +1,15 @@
+.container {
+  background-color: #f9ecd2;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: url("/img/LegumesBackground.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
