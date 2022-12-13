@@ -1,8 +1,8 @@
-import Head from 'next/head'
-import Footer from '../components/Footer'
-import GardenModeling from '../components/GardenModeling'
-import Header from '../components/Header'
-import styles from '../styles/Home.module.scss'
+import Head from "next/head";
+import Footer from "../components/Footer";
+import GardenModeling from "../components/GardenModeling";
+import Header from "../components/Header";
+import styles from "../styles/Home.module.scss";
 
 export default function Home() {
   return (
@@ -19,5 +19,5 @@ export default function Home() {
         <Footer />
       </main>
     </div>
-  )
+  );
 }

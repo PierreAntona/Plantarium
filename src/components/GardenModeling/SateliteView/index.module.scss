@@ -1,0 +1,45 @@
+@import "/src/styles/config.scss";
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+
+  .button {
+    @include button;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    bottom: 2rem;
+    left: 50%;
+    transform: translate(-50%);
+
+    img {
+      width: 24px;
+      margin-left: 10px;
+    }
+  }
+
+  .return {
+    position: absolute;
+    left: 3rem;
+    top: 2rem;
+    color: #FFF;
+    z-index: 10;
+
+    span {
+      font-family: "ApfelGrotezkRegular";
+      cursor: pointer;
+      font-size: 20px;
+      text-transform: initial;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

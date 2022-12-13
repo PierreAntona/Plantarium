@@ -1,40 +1,54 @@
-// Responsive
 $mobileBreakpoint: 864px;
 $tabletBreakpoint: 1024px;
+
 @mixin mobile() {
   @media screen and (max-width: $mobileBreakpoint) {
     @content;
   }
-} // @include mobile { }
+}
+
 @mixin mobileXSmall() {
   @media screen and (max-width: 340px) {
     @content;
   }
-} // @include mobile { }
+}
+
 @mixin mobileSmall() {
   @media screen and (max-width: 400px) {
     @content;
   }
-} // @include mobile { }
+}
+
 @mixin desktop() {
   @media screen and (min-width: $mobileBreakpoint + 1px) {
     @content;
   }
-} // @include desktop { }
+}
+
 @mixin tablet() {
   @media screen and (max-width: $tabletBreakpoint) {
     @content;
   }
-} // @include tablet { }
-// @mixin onlyTablet() {
-//   @media screen and (max-width: $tabletBreakpoint) and (min-width: $mobileBreakpoint) {
-//     @content;
-//   }
-// } // @include onlyTablet { }
+}
+
 @mixin onlyTablet() {
-  @media screen and (max-width: 865px) and (min-width: 500px) {
+  @media screen and (max-width: $tabletBreakpoint) and (min-width: $mobileBreakpoint) {
     @content;
   }
 }
 
+@mixin button() {
+  padding: 0.8rem 1.6rem;
+  border-radius: 50px;
+  border: 1px solid $brown;
+  width: fit-content;
+  background-color: $yellow;
+  font-family: "ApfelGrotezkBold";
+  color: $brown;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 300ms;
+}
+
 $brown: #322306;
+$yellow: #e9b752;
