@@ -1,34 +1,42 @@
 import * as React from "react";
 import area from "@turf/area";
-import geojson2svg from "geojson-to-svg";
 import { useEffect } from "react";
 
 function GardenGeneration(props) {
+
+  let coordinatesString = ""
   let polygonArea = 0;
+  let Xmin = 99999;
+  let Ymin = 99999;
+  let Xmax = 0;
+  let Ymax = 0;
+
   for (const polygon of props.polygons) {
     polygonArea += area(polygon);
   }
 
-  console.log(Math.round(polygonArea * 100) / 100);
+  const gardenSize = Math.round(polygonArea * 100) / 100;
 
   useEffect(() => {
     if (props.polygons[0]) {
-      
-      const geojson = {
-          type: "Feature",
-          properties: { id: props.polygons[0].id, type: "Polygon" },
-          geometry: {
-            type: "Polygon",
-            coordinates: [props.polygons[0].geometry.coordinates],
-          },
-        }
+      const coordinates = props.polygons[0].geometry.coordinates[0];
+      coordinates.forEach((coordinate) => {
 
-        const svg = geojson2svg()
-        .styles({ Polygon: { fill: "rgba(198, 193, 185, 0.4)", strokeWidth: 0} })
-        .data(geojson)
-        .render()
+        const newCoordinate = props.map.current.project(coordinate);
+        
+        if (Xmin > newCoordinate.x) { Xmin = newCoordinate.x; }
+        if (Ymin > newCoordinate.y) { Ymin = newCoordinate.y; }
 
-      console.log(svg);
+        if (Xmax < newCoordinate.x) { Xmax = newCoordinate.x; }
+        if (Ymax < newCoordinate.y) { Ymax = newCoordinate.y; }
+
+        coordinatesString += `${newCoordinate.x},${newCoordinate.y} `;
+      });
+
+      const viewBox = `${Xmin} ${Ymin} ${Xmax-Xmin} ${Ymax-Ymin}`;
+      const SVG = `<svg viewbox="${viewBox}" xmlns="http://www.w3.org/2000/svg"><polygon points="${coordinatesString}" fill="none" stroke="black" /></svg>`
+
+      console.log(SVG)
     }
   }, [props]);
 

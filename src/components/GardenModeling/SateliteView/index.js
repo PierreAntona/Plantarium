@@ -4,13 +4,14 @@ import Map, {
   NavigationControl,
   ScaleControl,
 } from "react-map-gl";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import GardenGeneration from "../GardenGeneration";
 import DrawControl from "../DrawControl";
 
-export default function SateliteView({ setTypeOfModeling }) {
+export default function SateliteView({ setDisplayMap, displayMap }) {
   const [lockLocation, setLockLocation] = useState();
   const [features, setFeatures] = useState({});
+  const refMap = useRef(null);
 
   const onUpdate = useCallback((e) => {
     setFeatures((currFeatures) => {
@@ -35,7 +36,7 @@ export default function SateliteView({ setTypeOfModeling }) {
   return (
     <div className={css.container}>
       {!lockLocation && (
-        <div className={css.return} onClick={() => setTypeOfModeling(null)}>
+        <div className={css.return} onClick={() => setDisplayMap(!displayMap)}>
           <span>Retour</span>
         </div>
       )}
@@ -46,12 +47,15 @@ export default function SateliteView({ setTypeOfModeling }) {
       </div>
 
       <Map
+        ref={refMap}
         initialViewState={{
           longitude: 2.5,
           latitude: 48.5,
           zoom: 5,
         }}
         mapStyle="https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL"
+        dragRotate={false}
+        // scrollZoom={lockLocation?false:true}
       >
         {!lockLocation && (
           <NavigationControl
@@ -83,6 +87,7 @@ export default function SateliteView({ setTypeOfModeling }) {
       </Map>
       {lockLocation && (
         <GardenGeneration
+          map={refMap}
           polygons={Object.values(features)}
           style={{ marginLeft: "3rem", marginTop: "2rem" }}
         />

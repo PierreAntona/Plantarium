@@ -8,10 +8,15 @@
 
   img {
     width: 200px;
+    cursor: pointer;
   }
 
   .menu {
     display: flex;
+
+    .active {
+      text-decoration: underline;
+    }
 
     span {
       font-size: 20px;
