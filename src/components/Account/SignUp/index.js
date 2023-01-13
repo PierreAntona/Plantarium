@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import css from "./index.module.scss";
+import axios from "axios";
 
 function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
-  const [usernameInput, setUsernameInput] = useState("");
+  const [mailInput, setMailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+
+  const register = () => {
+    axios({
+      method: "post",
+      data: {
+        mail: mailInput,
+        password: passwordInput
+      },
+      withCredentials: true,
+      url: "http://localhost:3000/login"
+    }).then((res) => console.log(res)).catch((err) => console.log(err));
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(usernameInput, passwordInput);
+    console.log(mailInput, passwordInput);
   };
 
   return (
@@ -27,18 +40,20 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
         <span>Ou</span>
       </div>
       <form onSubmit={handleSubmit}>
-      <label>Adresse e-mail<span>*</span></label>
+        <label>Adresse e-mail<span>*</span></label>
         <input
           type="text"
           required
-          value={usernameInput}
+          name="mail"
+          value={mailInput}
           placeholder="exemple@mail.fr"
-          onChange={(e) => setUsernameInput(e.target.value)}
+          onChange={(e) => setMailInput(e.target.value)}
         />
         <label>Mot de passe<span>*</span></label>
         <input
           type="password"
           required
+          name="password"
           valut={passwordInput}
           placeholder="••••••••••••"
           onChange={(e) => setPasswordInput(e.target.value)}
@@ -51,7 +66,7 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
           placeholder="••••••••••••"
           onChange={(e) => setPasswordInput(e.target.value)}
         />
-        <button type="submit">Continuer</button>
+        <button onClick={register} type="submit">Continuer</button>
       </form>
       <span
         onClick={() => setAlreadyAnAccount(!alreadyAnAccount)}
