@@ -14,7 +14,7 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
         password: passwordInput
       },
       withCredentials: true,
-      url: "http://localhost:3000/login"
+      url: "http://localhost:3001/login"
     }).then((res) => console.log(res)).catch((err) => console.log(err));
   }
 
