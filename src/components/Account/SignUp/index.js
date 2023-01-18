@@ -2,25 +2,30 @@ import React, { useState } from "react";
 import css from "./index.module.scss";
 import axios from "axios";
 
+import { useRouter } from "next/router";
+
 function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
-  const [mailInput, setMailInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const router = useRouter();
 
   const register = () => {
     axios({
       method: "post",
       data: {
-        mail: mailInput,
+        mail: emailInput,
         password: passwordInput
       },
       withCredentials: true,
-      url: "http://localhost:3001/login"
+      url: "http://localhost:3001/register"
     }).then((res) => console.log(res)).catch((err) => console.log(err));
+
+    router.push('/login')
+
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(mailInput, passwordInput);
   };
 
   return (
@@ -45,9 +50,9 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
           type="text"
           required
           name="mail"
-          value={mailInput}
+          value={emailInput}
           placeholder="exemple@mail.fr"
-          onChange={(e) => setMailInput(e.target.value)}
+          onChange={(e) => setEmailInput(e.target.value)}
         />
         <label>Mot de passe<span>*</span></label>
         <input

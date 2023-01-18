@@ -1,9 +1,27 @@
 import React, { useState } from "react";
 import css from "./index.module.scss";
+import axios from "axios";
+
+import { useRouter } from "next/router";
 
 function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const router = useRouter();
+
+  const login = () => {
+    axios({
+      method: "post",
+      data: {
+        mail: emailInput,
+        password: passwordInput
+      },
+      withCredentials: true,
+      url: "http://localhost:3001/login"
+    }).then((res) => console.log(res)).catch((err) => console.log(err));
+
+    //router.push('/')
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +61,7 @@ function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
           placeholder="••••••••••••"
           onChange={(e) => setPasswordInput(e.target.value)}
         />
-        <button type="submit">Continuer</button>
+        <button onClick={login} type="submit">Continuer</button>
       </form>
       <span
         onClick={() => setAlreadyAnAccount(!alreadyAnAccount)}

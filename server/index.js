@@ -1,8 +1,9 @@
 
 
 const express = require('express');
-const boddParser = require('body-parser');
-const cors = require('cors')
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const passport = require('passport')
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -11,8 +12,8 @@ const db = require('./db');
 
 const app = express();
 
-app.use(boddParser.json());
-app.use(boddParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret: 'mySecretKey', resave: false, saveUninitialized: false }))
 
 app.use(cors({
@@ -24,7 +25,12 @@ app.use(cookieParser('mySecretKey'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post('/login', (req, res) => {
+const passportConfig = require('./passportConfig');
+passportConfig(passport);
+
+
+app.post('/register', (req, res) => {
+
   const mail = req.body.mail;
   const password = req.body.password;
 
@@ -44,6 +50,24 @@ app.post('/login', (req, res) => {
       })
     }
   })
+});
+
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { throw err; }
+    if (!user) { res.send('No user exists') }
+    if (user) {
+      req.login(user, (err) => {
+        if (err) { throw err; }
+        res.send("User logged in");
+        console.log(user)
+      })
+    }
+  })(req, res, next);
+});
+
+app.get('/getUser', (req, res) => {
+  res.send(req.user);
 })
 
 app.listen(3001, () => {
