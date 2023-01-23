@@ -1,13 +1,44 @@
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import css from "./index.module.scss";
 
 function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
-  const [usernameInput, setUsernameInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+  const [registerError, setRegisterError] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(usernameInput, passwordInput);
+    setRegisterError("");
+
+    if (passwordInput === confirmPasswordInput) {
+      const data = {
+        email: emailInput,
+        password: passwordInput,
+      };
+
+      await axios.post("/api/register", data);
+
+      signIn("credentials", {
+        emailInput,
+        passwordInput,
+        callbackUrl: `/dashboard`,
+        redirect: false,
+      })
+        .then(function (result) {
+          router.push(result.url);
+        })
+        .catch((err) => {
+          alert("Erreur: " + err.toString());
+        });
+    } else {
+      setRegisterError("Les mots de passe sont différents.");
+    }
   };
 
   return (
@@ -27,32 +58,41 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
         <span>Ou</span>
       </div>
       <form onSubmit={handleSubmit}>
-      <label>Adresse e-mail<span>*</span></label>
+        <label>
+          Adresse e-mail<span>*</span>
+        </label>
         <input
           type="text"
           required
-          value={usernameInput}
+          value={emailInput}
           placeholder="exemple@mail.fr"
-          onChange={(e) => setUsernameInput(e.target.value)}
+          onChange={(e) => setEmailInput(e.target.value)}
         />
-        <label>Mot de passe<span>*</span></label>
+        <label>
+          Mot de passe<span>*</span>
+        </label>
         <input
           type="password"
           required
-          valut={passwordInput}
+          value={passwordInput}
+          autoComplete="off"
           placeholder="••••••••••••"
           onChange={(e) => setPasswordInput(e.target.value)}
         />
-        <label>Confirmer le mot de passe<span>*</span></label>
+        <label>
+          Confirmer le mot de passe<span>*</span>
+        </label>
         <input
           type="password"
           required
-          valut={passwordInput}
+          autoComplete="off"
+          value={confirmPasswordInput}
           placeholder="••••••••••••"
-          onChange={(e) => setPasswordInput(e.target.value)}
+          onChange={(e) => setConfirmPasswordInput(e.target.value)}
         />
         <button type="submit">Continuer</button>
       </form>
+      <span className={css.error}>{registerError}</span>
       <span
         onClick={() => setAlreadyAnAccount(!alreadyAnAccount)}
         className={css.signIn}

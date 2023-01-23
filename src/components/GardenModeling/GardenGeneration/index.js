@@ -34,7 +34,7 @@ function GardenGeneration(props) {
       });
 
       const viewBox = `${Xmin} ${Ymin} ${Xmax-Xmin} ${Ymax-Ymin}`;
-      const SVG = `<svg viewbox="${viewBox}" xmlns="http://www.w3.org/2000/svg"><polygon points="${coordinatesString}" fill="none" stroke="black" /></svg>`
+      const SVG = `<svg viewbox="${viewBox}" xmlns="http://www.w3.org/2000/svg"><polygon points="${coordinatesString}" fill="#C6C1B9" fill-opacity="0.4" stroke="#322306" stroke-dasharray="5 5" stroke-width="0.5" /></svg>`
 
       console.log(SVG)
     }

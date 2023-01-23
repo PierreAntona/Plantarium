@@ -1,13 +1,36 @@
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import css from "./index.module.scss";
 
 function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(emailInput, passwordInput);
+    e.stopPropagation();
+    setLoginError("");
+
+    signIn("credentials", {
+      emailInput,
+      passwordInput,
+      callbackUrl: `/dashboard`,
+      redirect: false,
+    }).then(function (result) {
+      if (result.error !== null) {
+        if (result.status === 401) {
+          setLoginError("Adresse ou mot de passe incorrect.");
+        } else {
+          setLoginError(result.error);
+        }
+      } else {
+        router.push(result.url);
+      }
+    });
   };
 
   return (
@@ -39,12 +62,14 @@ function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
         <input
           type="password"
           required
-          valut={passwordInput}
+          value={passwordInput}
+          autoComplete="off"
           placeholder="••••••••••••"
           onChange={(e) => setPasswordInput(e.target.value)}
         />
         <button type="submit">Continuer</button>
       </form>
+      <span className={css.error}>{loginError}</span>
       <span
         onClick={() => setAlreadyAnAccount(!alreadyAnAccount)}
         className={css.signUp}

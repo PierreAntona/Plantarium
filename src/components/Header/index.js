@@ -7,6 +7,7 @@ export default function Header(props) {
       <Link href="/">
         <img src="/img/logo.png" />
       </Link>
+      { props.isLog === false && 
       <div className={css.menu}>
         <span className={props.active == "about" ? css.active : null}>
           À Propos
@@ -15,6 +16,7 @@ export default function Header(props) {
           <Link href="/login">Se connecter</Link>
         </span>
       </div>
+      }
     </div>
   );
 }
