@@ -16,7 +16,7 @@ const confirmPasswordHash = (plainPassword, hashedPassword) => {
 
 const configuration = {
   cookie: {
-    secure: process.env.NODE_ENV && process.env.NODE_END === "production",
+    secure: process.env.NODE_ENV && process.env.NODE_ENV === "production",
   },
   session: {
     jwt: true,
@@ -44,9 +44,8 @@ const configuration = {
             );
             if (res === true) {
               userAccount = {
-                userId: user.userId,
                 email: user.email,
-                garden: user.garden
+                garden: user.garden,
               };
               return userAccount;
             } else {
@@ -66,20 +65,7 @@ const configuration = {
     async signIn(user, account, profile) {
       try {
         user = user.user;
-        console.log("Sign in callback", user);
-        console.log("User id: ", user.userId);
-        if (typeof user.userId !== typeof undefined) {
-          if (user.isActive === "1") {
-            console.log("User is active");
-            return user;
-          } else {
-            console.log("User is not active");
-            return false;
-          }
-        } else {
-          console.log("User id was undefined");
-          return false;
-        }
+        return user;
       } catch (err) {
         console.log("Signin callback error:", err);
         return false;
@@ -89,30 +75,29 @@ const configuration = {
       if (userAccount !== null) {
         session.user = userAccount;
         session.user = {
-          userId: userAccount.userId,
           email: userAccount.email,
-          garden: userAccount.garden
+          garden: userAccount.garden,
         };
       } else if (
         typeof token.user !== typeof undefined &&
         (typeof session.user === typeof undefined ||
-          (typeof session.user !== typeof undefined &&
-            typeof session.user.userId === typeof undefined))
+          typeof session.user !== typeof undefined)
       ) {
-        session.user = token.user;
+        session.user = token.token.user;
       } else if (typeof token !== typeof undefined) {
         session.token = token;
       }
+      console.log(session.user)
       return session;
     },
     async jwt(token, user, account, profile, isNewUser) {
-      console.log("JWT callback. Got User: ", user);
       if (typeof user !== typeof undefined) {
         token.user = user;
       }
       return token;
     },
   },
+  secret: process.env.JWT_SECRET,
 };
 
 export default (req, res) => NextAuth(req, res, configuration);

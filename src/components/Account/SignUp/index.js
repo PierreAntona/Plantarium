@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import css from "./index.module.scss";
 
 function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [registerError, setRegisterError] = useState("");
 
   const router = useRouter();
@@ -16,17 +16,17 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
     e.preventDefault();
     setRegisterError("");
 
-    if (passwordInput === confirmPasswordInput) {
+    if (password === confirmPassword) {
       const data = {
-        email: emailInput,
-        password: passwordInput,
+        email: email,
+        password: password,
       };
 
       await axios.post("/api/register", data);
 
       signIn("credentials", {
-        emailInput,
-        passwordInput,
+        email,
+        password,
         callbackUrl: `/dashboard`,
         redirect: false,
       })
@@ -64,9 +64,9 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
         <input
           type="text"
           required
-          value={emailInput}
+          value={email}
           placeholder="exemple@mail.fr"
-          onChange={(e) => setEmailInput(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <label>
           Mot de passe<span>*</span>
@@ -74,10 +74,10 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
         <input
           type="password"
           required
-          value={passwordInput}
+          value={password}
           autoComplete="off"
           placeholder="••••••••••••"
-          onChange={(e) => setPasswordInput(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <label>
           Confirmer le mot de passe<span>*</span>
@@ -86,9 +86,9 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
           type="password"
           required
           autoComplete="off"
-          value={confirmPasswordInput}
+          value={confirmPassword}
           placeholder="••••••••••••"
-          onChange={(e) => setConfirmPasswordInput(e.target.value)}
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <button type="submit">Continuer</button>
       </form>

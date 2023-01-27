@@ -6,6 +6,7 @@ export default function Wrapper(props) {
   const session = useSession();
   const router = useRouter();
 
+  console.log(session)
   if (
     (session !== null && session?.status === "authenticated") ||
     router.pathname === "/" ||

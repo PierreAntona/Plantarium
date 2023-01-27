@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import css from "./index.module.scss";
 
 function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
   const router = useRouter();
@@ -16,8 +16,8 @@ function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
     setLoginError("");
 
     signIn("credentials", {
-      emailInput,
-      passwordInput,
+      email,
+      password,
       callbackUrl: `/dashboard`,
       redirect: false,
     }).then(function (result) {
@@ -54,18 +54,18 @@ function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
         <input
           type="email"
           required
-          value={emailInput}
+          value={email}
           placeholder="exemple@mail.fr"
-          onChange={(e) => setEmailInput(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <label>Mot de passe</label>
         <input
           type="password"
           required
-          value={passwordInput}
+          value={password}
           autoComplete="off"
           placeholder="••••••••••••"
-          onChange={(e) => setPasswordInput(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Continuer</button>
       </form>
