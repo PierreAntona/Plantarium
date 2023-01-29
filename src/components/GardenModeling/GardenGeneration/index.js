@@ -1,6 +1,7 @@
 import * as React from "react";
 import area from "@turf/area";
 import { useEffect } from "react";
+import axios from "axios";
 
 function GardenGeneration(props) {
 
@@ -23,7 +24,7 @@ function GardenGeneration(props) {
       coordinates.forEach((coordinate) => {
 
         const newCoordinate = props.map.current.project(coordinate);
-        
+
         if (Xmin > newCoordinate.x) { Xmin = newCoordinate.x; }
         if (Ymin > newCoordinate.y) { Ymin = newCoordinate.y; }
 
@@ -33,10 +34,11 @@ function GardenGeneration(props) {
         coordinatesString += `${newCoordinate.x},${newCoordinate.y} `;
       });
 
-      const viewBox = `${Xmin} ${Ymin} ${Xmax-Xmin} ${Ymax-Ymin}`;
+      const viewBox = `${Xmin} ${Ymin} ${Xmax - Xmin} ${Ymax - Ymin}`;
       const SVG = `<svg viewbox="${viewBox}" xmlns="http://www.w3.org/2000/svg"><polygon points="${coordinatesString}" fill="#C6C1B9" fill-opacity="0.4" stroke="#322306" stroke-dasharray="5 5" stroke-width="0.5" /></svg>`
 
-      console.log(SVG)
+      //Add the svg to the bdd
+      axios.post("/api/addGarden", SVG);
     }
   }, [props]);
 
