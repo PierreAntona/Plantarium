@@ -80,14 +80,12 @@ const configuration = {
         };
       } else if (
         typeof token.user !== typeof undefined &&
-        (typeof session.user === typeof undefined ||
-          typeof session.user !== typeof undefined)
+        typeof session.user === typeof undefined
       ) {
-        session.user = token.token.user;
+        session.user = token.user;
       } else if (typeof token !== typeof undefined) {
         session.token = token;
       }
-      console.log(session.user)
       return session;
     },
     async jwt(token, user, account, profile, isNewUser) {
