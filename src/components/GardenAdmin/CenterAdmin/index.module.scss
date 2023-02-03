@@ -1,0 +1,10 @@
+.container {
+  grid-area: 1 / 2 / 2 / 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 100%;
+  }
+}

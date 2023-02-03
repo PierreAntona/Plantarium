@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import css from "./index.module.scss";
 
-function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
+function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [registerError, setRegisterError] = useState("");
 
   const router = useRouter();
+  const garden = router.query.gardenSvg;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
       const data = {
         email: email,
         password: password,
+        garden: garden,
       };
 
       await axios.post("/api/register", data);
@@ -93,12 +95,6 @@ function SignUp({ alreadyAnAccount, setAlreadyAnAccount }) {
         <button type="submit">Continuer</button>
       </form>
       <span className={css.error}>{registerError}</span>
-      <span
-        onClick={() => setAlreadyAnAccount(!alreadyAnAccount)}
-        className={css.signIn}
-      >
-        Se connecter
-      </span>
     </div>
   );
 }

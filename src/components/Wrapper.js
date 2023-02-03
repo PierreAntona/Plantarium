@@ -6,17 +6,16 @@ export default function Wrapper(props) {
   const session = useSession();
   const router = useRouter();
 
-  console.log(session)
   if (
     (session !== null && session?.status === "authenticated") ||
     router.pathname === "/" ||
-    router.pathname === "/login"
+    router.query.page !== undefined
   ) {
     return props.children;
   } else {
     return (
       <>
-        <h1>You are not authenticated</h1>
+        <h1>You don't have access to this page</h1>
         <Link href="/">Back to Home</Link>
       </>
     );

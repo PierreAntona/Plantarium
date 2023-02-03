@@ -12,5 +12,5 @@ model users {
   registeredAt  DateTime    @default(now())
   email         String      @db.VarChar(250)
   password      String      @db.VarChar(250)
-  garden        String      @default("")
+  garden        String      @db.VarChar(500)
 }

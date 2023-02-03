@@ -5,9 +5,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SignIn from "../components/Account/SignIn";
 import SignUp from "../components/Account/SignUp";
+import { useRouter } from "next/router";
 
 function Login() {
-  const [alreadyAnAccount, setAlreadyAnAccount] = useState(true);
+  const router = useRouter();
 
   return (
     <div className={css.container}>
@@ -18,18 +19,9 @@ function Login() {
       </Head>
 
       <main className={css.main}>
-        <Header active="login" />
-        {alreadyAnAccount ? (
-          <SignIn
-            alreadyAnAccount={alreadyAnAccount}
-            setAlreadyAnAccount={setAlreadyAnAccount}
-          />
-        ) : (
-          <SignUp
-            alreadyAnAccount={alreadyAnAccount}
-            setAlreadyAnAccount={setAlreadyAnAccount}
-          />
-        )}
+        <Header isLog={false} active="login" />
+        {router.query.page === "login" && <SignIn />}
+        {router.query.page === "signin" && <SignUp />}
         <Footer />
       </main>
     </div>

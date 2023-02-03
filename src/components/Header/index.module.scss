@@ -31,4 +31,17 @@
       }
     }
   }
+
+  .icons {
+    img {
+      width: 40px;
+      height: 40px;
+      margin-left: 20px;
+      transition: transform 400ms ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
 }

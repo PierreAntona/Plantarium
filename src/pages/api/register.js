@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 export default async (req, res) => {
     if (req.method === 'POST') {
-        const {email, password}= req.body;
+        const {email, password, garden}= req.body;
         console.log(req.body)
 
         try {
@@ -13,7 +13,8 @@ export default async (req, res) => {
             await prisma.users.create({
                 data: {
                     email: email,
-                    password: hash
+                    password: hash,
+                    garden: garden
                 }
             })
 

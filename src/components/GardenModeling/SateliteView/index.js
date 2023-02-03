@@ -8,7 +8,10 @@ import { useCallback, useRef, useState } from "react";
 import GardenGeneration from "../GardenGeneration";
 import DrawControl from "../DrawControl";
 
-export default function SateliteView({ setDisplayMap, displayMap }) {
+export default function SateliteView({
+  setDisplayMap,
+  displayMap,
+}) {
   const [lockLocation, setLockLocation] = useState();
   const [features, setFeatures] = useState({});
   const refMap = useRef(null);
@@ -41,9 +44,20 @@ export default function SateliteView({ setDisplayMap, displayMap }) {
         </div>
       )}
 
-      <div className={css.button} onClick={() => setLockLocation(!lockLocation)}>
-        {lockLocation ? <span>Modifier la localisation</span> : <span>Dessiner les contours du jardin</span> }   
-        {lockLocation ? <img src="/img/pin.png" /> : <img src="/img/plume.png" />}
+      <div
+        className={css.button}
+        onClick={() => setLockLocation(!lockLocation)}
+      >
+        {lockLocation ? (
+          <span>Modifier la localisation</span>
+        ) : (
+          <span>Dessiner les contours du jardin</span>
+        )}
+        {lockLocation ? (
+          <img src="/img/pin.png" />
+        ) : (
+          <img src="/img/plume.png" />
+        )}
       </div>
 
       <Map
@@ -92,6 +106,7 @@ export default function SateliteView({ setDisplayMap, displayMap }) {
           style={{ marginLeft: "3rem", marginTop: "2rem" }}
         />
       )}
+      
     </div>
   );
 }

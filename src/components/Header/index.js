@@ -7,16 +7,29 @@ export default function Header(props) {
       <Link href="/">
         <img src="/img/logo.png" />
       </Link>
-      { props.isLog === false && 
-      <div className={css.menu}>
-        <span className={props.active == "about" ? css.active : null}>
-          À Propos
-        </span>
-        <span className={props.active == "login" ? css.active : null}>
-          <Link href="/login">Se connecter</Link>
-        </span>
-      </div>
-      }
+      {props.isLog === false ? (
+        <div className={css.menu}>
+          <span className={props.active == "about" ? css.active : null}>
+            À Propos
+          </span>
+          <span className={props.active == "login" ? css.active : null}>
+            <Link
+              href={{
+                pathname: "/login",
+                query: { page: "login" },
+              }}
+            >
+              Se connecter
+            </Link>
+          </span>
+        </div>
+      ) : (
+        <div className={css.icons}>
+          <img src="/img/icon_print.png" />
+          <img src="/img/icon_share.png" />
+          <img src="/img/icon_account.png" />
+        </div>
+      )}
     </div>
   );
 }

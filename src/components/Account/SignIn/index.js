@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import css from "./index.module.scss";
 
-function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -70,12 +70,6 @@ function SignIn({ alreadyAnAccount, setAlreadyAnAccount }) {
         <button type="submit">Continuer</button>
       </form>
       <span className={css.error}>{loginError}</span>
-      <span
-        onClick={() => setAlreadyAnAccount(!alreadyAnAccount)}
-        className={css.signUp}
-      >
-        Créer un compte
-      </span>
     </div>
   );
 }
